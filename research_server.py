@@ -6,8 +6,11 @@ from fastmcp import FastMCP
 # Constants
 PAPER_DIR = "papers"
 
+# Get port from environment variable (for Render.com) or default to 8001
+PORT = int(os.environ.get("PORT", 8001))
+
 # Initialize FastMCP without port (will be set in run())
-mcp = FastMCP("research-server", port=8001)
+mcp = FastMCP("research-server")
 
 @mcp.tool()
 def search_papers(topic: str, max_results: int = 5) -> str:
@@ -173,4 +176,4 @@ def health_check() -> str:
     return "MCP Research Server is running and healthy!"
 
 if __name__ == "__main__":
-    mcp.run(transport='sse', port=8001)
+    mcp.run(transport='sse', port=PORT)
