@@ -6,8 +6,8 @@ from fastmcp import FastMCP
 # Constants
 PAPER_DIR = "papers"
 
-# Initialize FastMCP with a port number.
-mcp = FastMCP("research-server", port=8000)
+# Initialize FastMCP without port (will be set in run())
+mcp = FastMCP("research-server", port=8001)
 
 @mcp.tool()
 def search_papers(topic: str, max_results: int = 5) -> str:
@@ -167,5 +167,10 @@ def generate_search_prompt(topic: str, num_papers: int = 5) -> str:
     
     Please present both detailed information about each paper and a high-level synthesis of the research landscape in {topic}."""
 
+@mcp.tool()
+def health_check() -> str:
+    """Simple health check to verify the server is running."""
+    return "MCP Research Server is running and healthy!"
+
 if __name__ == "__main__":
-    mcp.run(transport='sse') 
+    mcp.run(transport='sse', port=8001)
